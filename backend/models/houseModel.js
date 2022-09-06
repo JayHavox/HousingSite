@@ -6,7 +6,7 @@ const HouseSchema = Schema ({
     address: String, 
     state: String,
     city: String, 
-    zipcode: String, 
+    zipcode: Number, 
     bedrooms: Number,
     bathrooms: Number, 
     sqft: Number,

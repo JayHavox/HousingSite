@@ -27,7 +27,7 @@ app.all('*', (req,res,next) => {
 app.use((err,req,res,next) => {
     const {statusCode = 500} = err;
     if(!err.message) err.message = 'Oh No, Something Went Wrong!'
-    res.status(statusCode).render('error',{ err });
+    res.status(statusCode).send(message); // change this send to a page we create in the frontend for errors
 });
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

@@ -5,6 +5,7 @@ const ExpressError = require('./middleware/errorMiddleware');
 const connectDB = require('./config/db');
 const port = process.env.PORT || 5000;
 const houseRoutes = require('./routes/houseRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 
 connectDB();
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/houses', houseRoutes);
+app.use('/api/users', userRoutes);
 
 app.get('/', (req, res) => {
     res.status(200).json({ message: 'HomePage' })
@@ -27,7 +29,7 @@ app.all('*', (req,res,next) => {
 app.use((err,req,res,next) => {
     const {statusCode = 500} = err;
     if(!err.message) err.message = 'Oh No, Something Went Wrong!'
-    res.status(statusCode).send(message); // change this send to a page we create in the frontend for errors
+    res.status(statusCode).send({err}); // change this send to a page we create in the frontend for errors
 });
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

@@ -1,24 +1,49 @@
 const asyncHandler = require('express-async-handler');
 const ExpressError = require('../middleware/errorMiddleware');
-
-
-const House = require('../models/houseModel')
+const House = require('../models/houseModel');
+const User = require('../models/userModel')
 
 
 //@desc Get Homes 
 // @route Get /api/houses
 const getHomes = asyncHandler(async (req,res) => {
-    const houses = await House.find()
+    const houses = await House.find({})
     res.status(200).json(houses)
 })
 
 //@desc Create a Home 
 // @route Get /api/houses
 const createHome = asyncHandler(async (req,res) => {
-   
-    const house = new House(req.body.house);
-    await house.save()
 
+    const house = await House.create ({
+        price: req.body.price,
+        address: req.body.address,
+        state: req.body.state,
+        city: req.body.city,
+        category: req.body.category,
+        bedrooms: req.body.bedrooms,
+        bathrooms: req.body.bathrooms,
+        sqft: req.body.sqft,
+        description: req.body.description,
+        image: req.body.image,
+        zipcode: req.body.zipcode,
+        user: req.user.id
+    })
+    
+     // may have to do redirect in case we dont in react
+    res.status(200).json(house)
+})
+
+
+//@desc Show a specific Home 
+// @route Get /api/:id
+const showHome = asyncHandler(async (req,res) => {
+    const house = await House.findById(req.params.id)
+
+    if(!house){
+        res.status(400)
+        throw new ExpressError ('Home was not found')
+    }
     res.status(200).json(house)
 })
 
@@ -29,7 +54,21 @@ const updateHome = asyncHandler(async (req,res) => {
 
     if(!house) {
         res.status(400)
-        throw new ExpressError ('Home was not found')
+        throw new ExpressError('Home was not found')
+    }
+
+    const user = await User.findById(req.user.id) 
+ 
+    //Checks for user
+    if(!user) {
+        res.status(401)
+        throw new ExpressError('User not found')
+    }
+
+    // Make sure the logged in user matches the house user
+    if(house.user.toString() !== user.id){
+        res.status(401)
+        throw new ExpressError('User not authorized')
     }
 
     const updatedHouse = await House.findByIdAndUpdate(req.params.id, req.body, {new:true,})
@@ -47,11 +86,25 @@ const deleteHome = asyncHandler(async (req,res) => {
         throw new ExpressError ('Home was not found')
     }
 
+    const user = await User.findById(req.user.id) 
+ 
+    //Checks for user
+    if(!user) {
+        res.status(401)
+        throw new ExpressError('User not found')
+    }
+
+    // Make sure the logged in user matches the house user
+    if(house.user.toString() !== user.id){
+        res.status(401)
+        throw new ExpressError ('User not authorized')
+    }
+
      await house.remove();
 
     res.status(200).json({id: req.params.id})
 })
 
 module.exports = {
-    getHomes, createHome, updateHome, deleteHome
+    getHomes, createHome, updateHome, deleteHome, showHome
 }

@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 const Home = () => {
   return (
     <>
-      <div className="container d-flex justify-content-center align-items-center mt-5">
-        <div className="row flex-fill">
+      <div className="container d-flex justify-content-center align-items-center mt-5 text-center">
+        <div className="row flex-fill mt-8">
           <div className='px-3'>
             <h1 className='fw-bolder'>DreamTown</h1>
             <p className="lead text-center text-light fw-semibold"> Welcome to DreamTown! <br /> Come on in to find your next home. <br />

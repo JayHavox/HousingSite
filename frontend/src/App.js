@@ -8,6 +8,8 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Show from './pages/Show'
 import SellHome from './pages/SellHome'
+import UpdateHome from './pages/UpdateHome'
+import ErrorPage from './pages/ErrorPage'
 
 
 
@@ -16,14 +18,16 @@ function App() {
     <>
       <Router>
         <Navbar />
-        <div className='cover-container d-flex w-100 h-100 p-3 mx-auto flex-column'>
+        <div className='cover-container d-flex w-100 h-100 p-3 mx-auto'>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/houses' element={<Houses />} />
             <Route path='/sellhome' element={<SellHome />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
-            <Route path='/show' element={<Show />} />
+            <Route path='/show/:Id' element={<Show />} />
+            <Route path='/updateHome/:id' element={<UpdateHome />} />
+            <Route path='*' element={<ErrorPage />}/>
           </Routes>
         </div>
       </Router>

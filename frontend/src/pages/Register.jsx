@@ -21,58 +21,60 @@ const Register = () => {
 
     const { user, isLoading, isError, isSuccess, message } = useSelector(
         (state) => state.auth
-      )
+    )
 
-      useEffect(() => {
+    useEffect(() => {
         if (isError) {
-          toast.error(message)
+            toast.error(message)
         }
-    
+
         if (isSuccess || user) {
-          navigate('/')
+            navigate('/houses')
         }
-    
+
         dispatch(reset())
-      }, [user, isError, isSuccess, message, navigate, dispatch])
+    }, [user, isError, isSuccess, message, navigate, dispatch])
 
-      const onChange = (e) => {
+    const onChange = (e) => {
         setFormData((prevState) => ({
-          ...prevState,
-          [e.target.name]: e.target.value,
+            ...prevState,
+            [e.target.name]: e.target.value,
         }))
-      }
+    }
 
-      const onSubmit = (e) => {
+    
+
+    const onSubmit = (e) => {
         e.preventDefault()
-    
-        if (password !== confirmPassword) {
-          toast.error('Passwords do not match')
-        } else {
-          const userData = {
-            name,
-            email,
-            password,
-          }
-    
-          dispatch(register(userData))
-        }
-      }
 
-      if (isLoading) {
+        if (password !== confirmPassword) {
+            toast.error('Passwords do not match')
+        } else {
+            const userData = {
+                name,
+                email,
+                password,
+            }
+
+            dispatch(register(userData))
+        }
+    }
+
+    if (isLoading) {
         return <Spinner />
-      }
+    }
 
 
     return (
         <>
-            <div className="container d-flex justify-content-center align-items-center mt-5">
+            <div className="container d-flex justify-content-center align-items-center mt-5 text-center">
                 <div className="row flex-fill">
                     <div className=' col-xl-8 offset-xl-2'>
                         <section className='heading'>
                             <h1><FaUser />Register</h1>
-                            <p>Please Create An Account </p>
+                            <p className='text-light'>Please Create An Account </p>
                         </section>
-                        <form className="validated-form" onSubmit={onSubmit} noValidate>
+                        <form className="validated-form" onSubmit={onSubmit} >
                             <div className="mb-3">
                                 <input className="form-control" type="text" id="name" name="name"
                                     autoFocus value={name} placeholder='Enter your name' required

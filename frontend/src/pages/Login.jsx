@@ -27,7 +27,7 @@ const Login = () => {
         }
     
         if (isSuccess || user) {
-          navigate('/')
+          navigate('/houses')
         }
     
         dispatch(reset())
@@ -58,14 +58,14 @@ const Login = () => {
 
     return (
         <>
-            <div className="container d-flex justify-content-center align-items-center mt-5">
+            <div className="container d-flex justify-content-center align-items-center mt-5 text-center">
                 <div className="row flex-fill">
                     <div className=' col-xl-8 offset-xl-2'>
                         <section className='heading'>
                             <h1><FaSignInAlt />Login</h1>
-                            <p>Signin To View Your Next Home</p>
+                            <p className='text-light'>Signin To View Your Next Home</p>
                         </section>
-                        <form className="validated-form" onSubmit={onSubmit} noValidate>
+                        <form className="validated-form" onSubmit={onSubmit} >
                             <div className="mb-3">
                                 <input className="form-control" type="email" id="email" name="email"
                                     value={email} placeholder='Enter your email' required

@@ -68,11 +68,31 @@
   border-bottom: 0.25rem solid transparent;
 }
 
-.btn-secondary, .btn-secondary:hover{
+.btn-secondary{
   color: #333;
   text-shadow: none;
 }
 
+.btn-secondary:hover {
+  color: #c91a1a !important
+}
+
 .cover-container {
   max-width: 100%;
+}
+
+.mt-8 {
+  margin-top: 13rem;
+}
+
+.w {
+width: 25rem;
+}
+
+.wi {
+  width: 50rem
+}
+
+.error{
+  margin-left: 800px;
 }

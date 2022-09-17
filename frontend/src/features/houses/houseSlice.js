@@ -28,11 +28,12 @@ export const createHome = createAsyncThunk('houses/create', async(homeData,thunk
 })
 
 // Get Homes
-export const getHomes = createAsyncThunk('houses/getAll', async(_,thunkAPI) => {
+export const getHomes = createAsyncThunk('houses/getAll', async(params,thunkAPI) => {
     try {
-        return await houseService.getHomes()
+        return await houseService.getHomes(params)
     } catch (error) {
         const message =
+        console.log(error)
                 (error.response &&
                     error.response.data &&
                     error.response.data.message) ||
@@ -118,7 +119,7 @@ export const houseSlice = createSlice({
         .addCase(getHomes.fulfilled, (state, action) => {
             state.isLoading = false
             state.isSuccess = true
-            state.homes = action.payload
+            state.homes = (action.payload)
         })
         .addCase(getHomes.rejected, (state, action) => {
             state.isLoading = false

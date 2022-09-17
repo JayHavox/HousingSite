@@ -1,31 +1,32 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const HouseSchema = Schema ({
+
+const HouseSchema = Schema({
     user: {
-        type:Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         required: true,
-        ref:'User',
+        ref: 'User',
     },
-    price:{
+    price: {
         type: Number,
         required: [true, 'Please add a price'],
         min: 0
     },
-    address:{
-        type:String, 
+    address: {
+        type: String,
         required: [true, 'Please add an address']
     },
     state: {
-        type:String, 
+        type: String,
         required: [true, 'Please add a state'],
         minLength: 2
     },
     city: {
-        type:String, 
+        type: String,
         required: [true, 'Please add a city']
-    }, 
-    zipcode:{
+    },
+    zipcode: {
         type: Number,
         required: [true, 'Please add a zipcode'],
         min: 0
@@ -46,27 +47,22 @@ const HouseSchema = Schema ({
         min: 1
     },
     description: {
-        type:String, 
+        type: String,
         required: [true, 'Please add a description']
-    }, 
-    image:  {
-        type:String, 
-        required: [true, 'Please add an image url']
-    }, 
+    },
+    image: {
+        type: String,
+        required: [true, 'Please add an image']
+    },
     category: {
-        type:String,
-        enum:['Apartment', 'House', 'Condo', 'Townhouse']
+        type: String,
+        enum: ['Apartment', 'House', 'Condo', 'Townhouse']
     }
 }, {
     timestamps: true
 });
 
-HouseSchema.static('getCategories', function() {
-    return [...this.schema.paths.category.enumValues]
-})
 
-HouseSchema.method('getCategories', function() {
-    return[...this.schema.paths.category.enumValues]
-})
 
-module.exports = mongoose.model('House', HouseSchema )
+
+module.exports = mongoose.model('House', HouseSchema)

@@ -98,8 +98,8 @@ function HomeForm() {
                 <input type="number" className="form-control" id="sqft" name='sqft' value={sqft} onChange={onSqftChanged} required />
             </div>
             <div className="col-12">
-                <label htmlFor="image" className="form-label"><h4 className='text-light'>Image URL:</h4></label>
-                <input type="text" className="form-control" id="image" name="image" value={onImageChanged} required />
+                <label htmlFor="image" className="form-label"><h4 className='text-light'>Input Images</h4></label>
+                <input type="text" className="form-control" id="image" name="image" onChange={onImageChanged} required />
             </div>
             <div className='col-md-12'>
             <label className="form-label" htmlFor="description"><h4 className='text-light'>Description:</h4></label>

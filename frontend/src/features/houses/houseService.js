@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+
+
 const API_URL = '/api/houses/'
 
 // Create new home
@@ -21,7 +23,21 @@ const createHome = async (homeData, token) => {
 
 const getHomes = async () => {
     
-    const response = await axios.get(API_URL)
+    const response = await axios.get(API_URL, {
+       params : {
+        page: 1,
+        categoryOptions: [
+          "Apartment",
+          "House",
+          "Condo",
+          "Townhouse"
+      ],
+        search:''
+      }
+    })
+    
+
+    console.log(response.data)
 
     return response.data
 }

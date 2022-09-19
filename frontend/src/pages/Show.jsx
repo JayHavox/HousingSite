@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import Spinner from '../components/Spinner'
-import { deleteHome } from "../features/houses/houseSlice";
+import { deleteHome, selectAllHomes } from "../features/houses/houseSlice";
 import { useDispatch } from "react-redux";
 
 
@@ -14,8 +14,9 @@ const Show = () => {
   const navigate = useNavigate();
 
 
-  const { homes, isLoading, isError, message } = useSelector((state) => state.homes)
+  const { homes, isLoading, isError, message } = useSelector(selectAllHomes)
   const { user } = useSelector((state) => state.auth)
+  
 
   console.log(user)
 
@@ -30,12 +31,16 @@ const Show = () => {
       }
     })
 
-    
-
   }, [homes, id, isError, message])
 
   if (isLoading) {
     return <Spinner />
+  }
+  
+  if(!details) {
+    <section>
+      <h2>No Home Found</h2>
+    </section>
   }
 
   //deleting the home
@@ -62,6 +67,10 @@ const Show = () => {
 
       }
     })
+  }
+
+  const onClick2 = () => {
+    navigate('/houses')
   }
 
  
@@ -96,10 +105,14 @@ const Show = () => {
                 })()
               }
             </>
+            <button className="btn btn btn-light" onClick={onClick2}>Back Home</button>
           </div>
         </div>
+        
       </div>
+      
               </div>
+              
     </div>
   )
 }

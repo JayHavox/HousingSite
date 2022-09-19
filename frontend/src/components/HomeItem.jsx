@@ -17,7 +17,8 @@ const HomeItem = ({ home }) => {
                             <div className="col">
                                 <div className="card-body">
                                     <h5 className="card-title">{home.address}</h5>
-                                    <p className="card-text">{home.description}</p>
+                                    <h6 className="card-subtitle mb-2 text-muted">{home.city},{home.state}</h6>
+                                    <p className="card-text">{home.description.substring(0,100)}</p>
                                     <p className="card-text"><small className="text-muted">For sale since: {new Date(home.createdAt).toLocaleDateString('en-US')}</small></p>
                                     <Link className="btn btn-primary" onClick={() => dispatch(showHome(home._id))} to={`/show/${home._id}`}>View {home.category}</Link>
                                 </div>

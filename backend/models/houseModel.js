@@ -15,16 +15,19 @@ const HouseSchema = Schema({
     },
     address: {
         type: String,
-        required: [true, 'Please add an address']
+        required: [true, 'Please add an address'],
+        index:true
     },
     state: {
         type: String,
         required: [true, 'Please add a state'],
-        minLength: 2
+        minLength: 2,
+        index:true
     },
     city: {
         type: String,
-        required: [true, 'Please add a city']
+        required: [true, 'Please add a city'],
+        index:true
     },
     zipcode: {
         type: Number,
@@ -56,12 +59,18 @@ const HouseSchema = Schema({
     },
     category: {
         type: String,
-        enum: ['Apartment', 'House', 'Condo', 'Townhouse']
+        index:true
     }
 }, {
     timestamps: true
 });
 
+HouseSchema.index({
+    address:'text',
+    state:'text',
+    city:'text',
+    category:'text'
+})
 
 
 

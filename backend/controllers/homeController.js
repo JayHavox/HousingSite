@@ -9,55 +9,33 @@ const user = require('../models/userModel')
 //@desc Get Homes 
 // @route Get /api/houses
 const getHomes = asyncHandler(async (req, res) => {
-    const page = parseInt(req.query.page) - 1 || 0;
-    const limit = parseInt(req.query.limit) || 4;
-    const search = req.query.search || "";
-    let sort = req.query.sort || 'price'
-    let category = req.query.category || 'All';
-    
-    const categoryOptions = [
-        "Apartment",
-        "House",
-        "Condo",
-        "Townhouse"
-    ];
 
 
-    category === 'All'
-        ? (category = [...categoryOptions])
-        : (category = req.query.category.split(','));
-    req.query.sort ? (sort = req.query.sort.split(',')) : (sort = [sort])
+    const houses = await House.find()
 
-    let sortBy = {};
-    if (sort[1]) {
-        sortBy[sort[0]] = sort[1];
-    } else {
-        sortBy[sort[0]] = "asc";
-    }
-   
-
-    const houses = await House.find({ state: { $regex: search, $options: 'i' } })
-        .where('category')
-        .in([...category])
-        .sort(sortBy)
-        .skip(page * limit)
-        .limit(limit);
-
-     const total = await House.countDocuments({
-        category: {$in: [...category]},
-        state: {$regex:search, $options:'i'}
-    })
-    const info = {
-        totalPages: Math.ceil(total / limit),
-        page: page + 1,
-        limit,
-        category: categoryOptions,
-        houses
-    }
     res.status(200).json(houses)
-   
+
+})
+
+
+//@desc Gets a Home by search
+// @route Get /api/houses/search
+const getHomesBySearch = asyncHandler(async (req, res) => {
+    const searchQuery = req.query.searchQuery ;
+
     
-    
+
+    const houses = await House.find({
+        $or:[
+            {address: { $regex: searchQuery, $options: "i" } },
+            {category: { $regex: searchQuery, $options: "i" } },
+            {city: { $regex: searchQuery, $options: "i" } },
+            {state: { $regex: searchQuery, $options: "i" } },
+        ]
+    })
+
+
+    res.status(200).json(houses)
 })
 
 //@desc Create a Home 
@@ -155,5 +133,5 @@ const deleteHome = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getHomes, createHome, updateHome, deleteHome, showHome
+    getHomes, createHome, updateHome, deleteHome, showHome, getHomesBySearch
 }

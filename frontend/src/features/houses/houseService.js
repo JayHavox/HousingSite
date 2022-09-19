@@ -23,23 +23,20 @@ const createHome = async (homeData, token) => {
 
 const getHomes = async () => {
     
-    const response = await axios.get(API_URL, {
-       params : {
-        page: 1,
-        categoryOptions: [
-          "Apartment",
-          "House",
-          "Condo",
-          "Townhouse"
-      ],
-        search:''
-      }
-    })
+    const response = await axios.get(API_URL  )
+
     
-
-    console.log(response.data)
-
     return response.data
+}
+
+//Get Homes by search
+
+const getHomesBySearch = async (searchQuery) => {
+  const response = await axios.get(API_URL + `search?searchQuery=${searchQuery.search || 'none'}` )
+  
+  console.log(response)
+  
+  return response.data
 }
 
 // Get a homes
@@ -85,7 +82,8 @@ const houseService = {
     getHomes, 
     updateHome,
     deleteHome,
-    showHome
+    showHome,
+    getHomesBySearch
 }
 
 export default houseService

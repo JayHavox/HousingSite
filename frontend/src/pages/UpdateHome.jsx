@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  updateHome } from "../features/houses/houseSlice";
+import {  selectAllHomes, updateHome } from "../features/houses/houseSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import Spinner from '../components/Spinner'
 
-import { selectAllHomes } from "../features/houses/houseSlice";
 
 const UpdateHome = () => {
     const navigate = useNavigate()

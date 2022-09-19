@@ -28,12 +28,26 @@ export const createHome = createAsyncThunk('houses/create', async(homeData,thunk
 })
 
 // Get Homes
-export const getHomes = createAsyncThunk('houses/getAll', async(params,thunkAPI) => {
+export const getHomes = createAsyncThunk('houses/getAll', async(_,thunkAPI) => {
     try {
-        return await houseService.getHomes(params)
+        return await houseService.getHomes()
     } catch (error) {
         const message =
-        console.log(error)
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString()
+            return thunkAPI.rejectWithValue(message)
+    }
+})
+
+// get homes by searching for them
+export const getHomesBySearch = createAsyncThunk('/houses/search', async(searchQuery,thunkAPI) => {
+    try {
+        return await houseService.getHomesBySearch(searchQuery)
+    } catch (error) {
+        const message =
                 (error.response &&
                     error.response.data &&
                     error.response.data.message) ||
@@ -126,6 +140,19 @@ export const houseSlice = createSlice({
             state.isError = true
             state.message = action.payload
         })
+        .addCase(getHomesBySearch.pending, (state) => {
+            state.isLoading = true
+        })
+        .addCase(getHomesBySearch.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.homes = (action.payload)
+        })
+        .addCase(getHomesBySearch.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
         .addCase(updateHome.pending, (state) => {
             state.isLoading = true
         })
@@ -133,7 +160,6 @@ export const houseSlice = createSlice({
             state.isLoading = false
             state.isSuccess = true
             state.homes  = [...state.homes.filter(home => home._id !== action.payload.id), action.payload] 
-           
         })
         .addCase(updateHome.rejected, (state, action) => {
             state.isLoading = false

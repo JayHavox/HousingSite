@@ -86,6 +86,7 @@ const Show = () => {
             <h6 className="card-subtitle mb-2 text-muted mb-3">Address: {details.address} State: {details.state} City: {details.city} Zipcode: {details.zipcode}</h6>
             <p className="card-text">Bedrooms: {details.bedrooms} Bathrooms: {details.bathrooms} sqft: {details.sqft}</p>
             <p className="card-text">{details.description}</p>
+            <p className="card-text">Interested in Buying? Please Contact: dreamtown@gmail.com</p>
             <div className="card-footer text-center"> {details.category}</div>
             <>
               {
@@ -105,7 +106,7 @@ const Show = () => {
                 })()
               }
             </>
-            <button className="btn btn btn-light" onClick={onClick2}>Back Home</button>
+            <button className="btn btn btn-light mt-2" onClick={onClick2}>Back Home</button>
           </div>
         </div>
         

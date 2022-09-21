@@ -18,7 +18,6 @@ const Show = () => {
   const { user } = useSelector((state) => state.auth)
   
 
-  console.log(user)
 
   // getting home details
   useEffect(() => {
@@ -62,7 +61,7 @@ const Show = () => {
         bathrooms: details.bathrooms,
         sqft: details.sqft,
         description: details.description,
-        catgegory: details.category,
+        category: details.category,
         image: details.image
 
       }

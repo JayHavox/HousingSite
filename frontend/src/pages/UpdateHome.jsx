@@ -70,6 +70,8 @@ const UpdateHome = () => {
         navigate(`/show/${location.state.id}`)
     }
 
+    
+
     return (
         <div className='row'>
             <h1 className='text-center'>Edit Your Home</h1>
@@ -106,7 +108,7 @@ const UpdateHome = () => {
                     <div className="col-md-6">
                         <label htmlFor="category" className="form-label"><h4 className='text-light'>Category:</h4></label>
                         <select id="state" className="form-select" name='category' value={category} onChange={onCategoryChanged} required>
-                            <option>Choose...</option>
+                            <option value={category}>{category}</option>
                             <option value='Apartment'>Apartment</option>
                             <option value='House'>House</option>
                             <option value='Condo'>Condo</option>
